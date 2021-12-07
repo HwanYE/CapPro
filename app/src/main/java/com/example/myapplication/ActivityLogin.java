@@ -13,74 +13,73 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ActivityLogin extends AppCompatActivity {
 
-    EditText mID, mPassword;
-    Button mIdSignInButton, mIdSignUpButton;
+    private EditText et_id, et_pass;
+    private Button btn_login, btn_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set up the login form.
-        mID = (EditText) findViewById(R.id.userid);
-        mPassword = (EditText) findViewById(R.id.userpassword);
-
-        // Button
-        mIdSignInButton = (Button) findViewById(R.id.loginButton); // sign in button
-        mIdSignUpButton = (Button) findViewById(R.id.signupButton); // sign up button
+        et_id = findViewById(R.id.userid);
+        et_pass = findViewById(R.id.userpassword);
+        btn_login = findViewById(R.id.loginButton);
+        btn_register = findViewById(R.id.signupButton);
 
 
-        // 로그인 버튼 클릭
-        mIdSignInButton.setOnClickListener(new View.OnClickListener() {
+        // 회원가입 버튼을 클릭 시 수행
+        btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userID = mID.getText().toString();
-                String userPassword = mPassword.getText().toString();
-
-                Response.Listener<String> responseListener = response -> {
-                    try{
-                        JSONObject jsonResponse = new JSONObject(response);
-                        boolean success = jsonResponse.getBoolean("success");
-                        if(success){
-                            Toast.makeText(getApplicationContext(), "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show();
-
-                            String userID1 = jsonResponse.getString("userID");
-                            String userPassword1 = jsonResponse.getString("userPassword");
-                            Intent intent = new Intent(getApplicationContext(), MainScreen.class);
-                            // 로그인 하면서 사용자 정보 넘기기
-                            //intent.putExtra("userID", userID);
-                            //intent.putExtra("userPassword", userPassword);
-                            UserConnection.setUserId(userID1);
-                            startActivity(intent);
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    } catch(Exception e){
-                        e.printStackTrace();
-                    }
-                };
-
-                LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(ActivityLogin.this);
-                queue.add(loginRequest);
-
-            }
-        });
-
-        // 회원가입 버튼 클릭
-        mIdSignUpButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Activity_signup.class);
+                Intent intent = new Intent(ActivityLogin.this, Activity_signup.class);
                 startActivity(intent);
             }
         });
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // EditText에 현재 입력되어있는 값을 get(가져온다)해온다.
+                String userID = et_id.getText().toString();
+                String userPass = et_pass.getText().toString();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
+                            System.out.println("hongchul" + response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if (success) { // 로그인에 성공한 경우
+                                String userID = jsonObject.getString("userID");
+                                String userPass = jsonObject.getString("userPassword");
+
+                                Toast.makeText(getApplicationContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ActivityLogin.this, MainScreen.class);
+                                intent.putExtra("userID", userID);
+                                intent.putExtra("userPass", userPass);
+                                startActivity(intent);
+                            } else { // 로그인에 실패한 경우
+                                Toast.makeText(getApplicationContext(),"로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                LoginRequest loginRequest = new LoginRequest(userID, userPass, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(ActivityLogin.this);
+                queue.add(loginRequest);
+            }
+        });
+
 
     }
 }

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    tools:context=".MainScreen">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="423dp"
+        android:layout_height="740dp"
+        android:background="#FFEEEE"
+        android:orientation="vertical"
+        app:layout_constraintBaseline_toBaselineOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/Layout_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="#FFE5E5"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_moreInfo"
+                android:layout_width="100dp"
+                android:layout_height="95dp"
+                android:layout_weight="0"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/btn_moreinfo" />
+
+            <TextView
+                android:id="@+id/txt_display_name"
+                android:layout_width="255dp"
+                android:layout_height="62dp"
+                android:layout_weight="0"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Layout_food"
+            android:layout_width="420dp"
+            android:layout_height="275dp"
+            android:layout_marginTop="7dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="0">
+
+                <TextView
+                    android:id="@+id/dis_need"
+                    android:layout_width="317dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="0"
+                    android:fontFamily="@font/welcome_regular"
+                    android:text="필요 발주량"
+                    android:textColor="#000000"
+                    app:autoSizeTextType="uniform" />
+
+                <Button
+                    android:id="@+id/btn_need_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="0"
+                    android:onClick="button_needInfo"
+                    android:text="More" />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/tablelayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView_foodname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:fontFamily="@font/welcome_regular"
+                        android:background="@drawable/roundedtextview"
+                        android:text="품명"
+                        android:textColor="#000000"
+                        android:textSize="34sp" />
+
+                    <TextView
+                        android:id="@+id/textView_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:fontFamily="@font/welcome_regular"
+                        android:background="@drawable/roundedtextview"
+                        android:text="갯수"
+                        android:textColor="#000000"
+                        android:textSize="34sp" />
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            app:layout_constraintBottom_toBottomOf="@+id/img_market2"
+            app:layout_constraintTop_toBottomOf="@+id/img_market2">
+
+            <Button
+                android:id="@+id/btn_market_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="0"
+                android:onClick="btn_market_more_Clicked"
+                android:text="More"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+            <ImageView
+                android:id="@+id/img_market1"
+                android:layout_width="0dp"
+                android:layout_height="72dp"
+                android:layout_marginEnd="2dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="@+id/img_market2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:srcCompat="@drawable/dis_market" />
+
+            <ImageView
+                android:id="@+id/img_market2"
+                android:layout_width="330dp"
+                android:layout_height="71dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_market1"
+                app:srcCompat="@drawable/dis_market" />
+
+            <ImageView
+                android:id="@+id/img_marketinfo"
+                android:layout_width="93dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/img_market1"
+                app:layout_constraintTop_toTopOf="@+id/img_market1"
+                app:srcCompat="@drawable/img_possible" />
+
+            <ImageView
+                android:id="@+id/img_marketinfo2"
+                android:layout_width="93dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/img_market2"
+                app:layout_constraintTop_toBottomOf="@+id/img_market1"
+                app:srcCompat="@drawable/img_impossible" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="24dp"
+                android:text="주변 매장"
+                android:textColor="#000000"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toStartOf="@+id/btn_market_more"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

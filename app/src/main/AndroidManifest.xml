@@ -44,6 +44,7 @@
         <activity
             android:name=".ActivityLogin"
             android:exported="true">
+            <!-- App 실행시 가장 먼저 실행되는 Activity 다른언어의 경우 main()격 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

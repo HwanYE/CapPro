@@ -12,14 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!-- ActinoBar 제거 (안드로이드 구버전에선 ActinoBar사용 최신버전에서는 ToolBar사용) -->
+        <item name = "windowActionBar">false</item>
+        <item name = "windowNoTitle">true</item>
+
     </style>
 
-    <style name="NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

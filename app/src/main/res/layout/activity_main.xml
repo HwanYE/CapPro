@@ -1,79 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BCFFE60E"
+    android:orientation="vertical"
+    android:background="#99111111"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:paddingTop="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1056dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/ID"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/storemanager_logo" />
-
+            android:layout_marginBottom="10dp"
+            android:background="#B0AEE6FF"
+            android:hint="ID를 입력하세요."
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/PW"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#B0AEE6FF"
+            android:hint="패스워드를 입력하세요."
+            android:textSize="15dp"
+            android:padding="10dp"
+            android:gravity="center"/>
         <LinearLayout
-            android:layout_width="322dp"
-            android:layout_height="163dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="12dp"
-                android:layout_height="23dp"
-                android:text="Id" />
-
-            <EditText
-                android:id="@+id/userid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Enter Id"
-                android:inputType="textPersonName"
-                android:text="2" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="password" />
-
-            <EditText
-                android:id="@+id/userpassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Enter Password"
-                android:inputType="textPassword"
-                android:text="2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="409dp"
-            android:layout_height="289dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/loginButton"
-                android:layout_width="104dp"
-                android:layout_height="61dp"
-                android:text="LOGIN" />
+                android:id="@+id/sign_in"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="로그인"
+                android:layout_marginRight="10dp"
+                android:background="#D7C0FF"
+                android:layout_marginTop="20dp"/>
 
             <Button
-                android:id="@+id/signupButton"
-                android:layout_width="104dp"
-                android:layout_height="65dp"
-                android:text="REGISTER" />
+                android:id="@+id/sign_up"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="회원가입"
+                android:layout_marginLeft="10dp"
+                android:background="#D7C0FF"
+                android:layout_marginTop="20dp"/>
+
         </LinearLayout>
+
+
+
+
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

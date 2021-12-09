@@ -1,86 +1,164 @@
 package com.example.myapplication;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
-
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Activity_signup extends Activity {
+    private static String IP_ADDRESS = "10.0.2.2";
+    private static String TAG = "REGISTER";
 
-    private Button mSubmitButton;
-
-    private EditText mName, mID, mPassword, mBirth;
-
-    private static String userName, userId, userPassword, userBirth;
+    private EditText mEditTextID;
+    private EditText mEditTextPASSWORD;
+    private EditText mEditTextSNAME;
+    private EditText mEditTextSLOCATION;
+    private TextView mTextViewResult;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_signup);
 
-        // 값 가져오기
-        mName = (EditText) findViewById(R.id.name);
-        mID = (EditText) findViewById(R.id.ID);
-        mPassword = (EditText) findViewById(R.id.password);
-        mBirth = (EditText) findViewById(R.id.birth);
-        mSubmitButton = (Button) findViewById(R.id.registerButton);
+        mEditTextID = (EditText)findViewById(R.id.editText_main_id);
+        mEditTextPASSWORD = (EditText)findViewById(R.id.editText_main_pw);
+        mEditTextSNAME = (EditText)findViewById(R.id.editText_main_sname);
+        mEditTextSLOCATION = (EditText)findViewById(R.id.editText_main_slocation);
+
+        mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
+
+        mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
 
-        // 회원 가입 버튼이 눌렸을때
-        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+        Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
+        buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-                // 현재 입력된 정보를 string으로 가져오기
-                userName = mName.getText().toString();
-                userId = mID.getText().toString();
-                userPassword = mPassword.getText().toString();
-                userBirth = mBirth.getText().toString();
+                String userID = mEditTextID.getText().toString();
+                String userPassword = mEditTextPASSWORD.getText().toString();
+                String S_NAME = mEditTextSNAME.getText().toString();
+                String S_LOCATION = mEditTextSLOCATION.getText().toString();
 
-                // 회원가입 절차 시작
-                Response.Listener<String> responseListener = new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response) {
-                        try{
-                            // String으로 그냥 못 보냄으로 JSON Object 형태로 변형하여 전송
-                            // 서버 통신하여 회원가입 성공 여부를 jsonResponse로 받음
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if(success){ // 회원가입이 가능한다면
-                                Toast.makeText(getApplicationContext(), "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                InsertData task = new InsertData();
+                task.execute("http://" + IP_ADDRESS + "/Register.php", userID,userPassword,S_NAME,S_LOCATION);
 
-                                Intent intent = new Intent(Activity_signup.this, ActivityLogin.class );
-                                startActivity(intent);
-                                finish();//액티비티를 종료시킴(회원등록 창을 닫음)
 
-                            }else{// 회원가입이 안된다면
-                                Toast.makeText(getApplicationContext(), "회원가입에 실패했습니다. 다시 한 번 확인해 주세요.", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
+                //mEditTextID.setText("");
+                //mEditTextPASSWORD.setText("");
 
-                        }
-                        catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                };
-
-                // Volley 라이브러리를 이용해서 실제 서버와 통신을 구현하는 부분
-                RegisterRequest registerRequest = new RegisterRequest(userId, userPassword, userName, userBirth, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(Activity_signup.this);
-                queue.add(registerRequest);
             }
         });
+
     }
+
+
+
+    class InsertData extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(Activity_signup.this,
+                    "Please Wait", null, true, true);
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+            mTextViewResult.setText(result);
+            Log.d(TAG, "POST response  - " + result);
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String userID = (String)params[1];
+            String userPassword = (String)params[2];
+            String S_NAME = (String)params[3];
+            String S_LOCATION = (String)params[4];
+
+            String serverURL = (String)params[0];
+            String postParameters = "userID=" + userID + "&userPassword=" + userPassword
+                    + "&S_NAME=" + S_NAME + "&S_LOCATION=" + S_LOCATION;
+
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG, "InsertData: Error ", e);
+
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
+    }
+
+
 }

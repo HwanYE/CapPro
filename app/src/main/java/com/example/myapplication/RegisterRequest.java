@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
@@ -9,24 +8,20 @@ import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
 
-    // 서버 url 설정 (php 파일 연동)
-    final static private String URL = "http://118.67.143.82/Register.php"; // "http:// 퍼블릭 DNS 주소/Register.php"
+    final static private String URL = "http://10.0.2.2/UserInfo.php";
     private Map<String, String> parameters;
 
-
-    public RegisterRequest(String userID, String userPassword, String userName, String userBirth, Response.Listener<String> listener){
+    public RegisterRequest(String userID, String userPassword, String S_NAME, String S_LOACTION, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
-
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPassword", userPassword);
-        parameters.put("userName", userName);
-        parameters.put("userBirth", userBirth);
+        parameters.put("S_NAME", S_NAME);
+        parameters.put("S_LOCATION", S_LOACTION);
     }
 
-
     @Override
-    protected Map<String, String> getParams() throws AuthFailureError {
+    public Map<String, String> getParams() {
         return parameters;
     }
 }

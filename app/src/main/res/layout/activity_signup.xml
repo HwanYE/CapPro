@@ -6,41 +6,63 @@
     android:orientation="vertical"
     tools:context=".Activity_signup">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView_main_id"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Name"
-        android:inputType="textPersonName" />
+        android:text="아이디" />
 
     <EditText
-        android:id="@+id/ID"
+        android:id="@+id/editText_main_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter ID"
-        android:inputType="textPersonName" />
+        android:background="@drawable/roundedtextview" />
+
+    <TextView
+        android:id="@+id/textView_main_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비밀번호" />
 
     <EditText
-        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Password"
-        android:inputType="textPersonName" />
+        android:id="@+id/editText_main_pw"
+        android:background="@drawable/roundedtextview"/>
+
+    <TextView
+        android:id="@+id/textView_main_sname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가게명" />
 
     <EditText
-        android:id="@+id/birth"
+        android:id="@+id/editText_main_sname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Birth"
-        android:inputType="textPersonName" />
+        android:background="@drawable/roundedtextview" />
+
+    <TextView
+        android:id="@+id/textView_main_slocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가게위치" />
+
+    <EditText
+        android:id="@+id/editText_main_slocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundedtextview" />/>
 
     <Button
-        android:id="@+id/registerButton"
+        android:id="@+id/button_main_insert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="REGISTER" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/textView_main_result" />
+
 </LinearLayout>

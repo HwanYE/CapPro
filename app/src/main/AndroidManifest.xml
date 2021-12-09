@@ -24,9 +24,6 @@
         <activity
             android:name=".Activity_foodinfo"
             android:exported="true" />
-        <activity
-            android:name=".WebViewActivity"
-            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
